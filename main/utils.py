@@ -1,7 +1,8 @@
 import os
-import sys
 import re
+
 from django.core.exceptions import ImproperlyConfigured
+
 
 def get_env_value(env_variable):
     try:
@@ -9,6 +10,7 @@ def get_env_value(env_variable):
     except KeyError:
         error_msg = ('Set the %s environment variable' % env_variable)
         raise ImproperlyConfigured(error_msg)
+
 
 def read_env():
     """Pulled from Honcho code with minor updates, reads local default
@@ -34,5 +36,4 @@ def read_env():
             if m3:
                 val = re.sub(r'\\(.)', r'\1', m3.group(1))
             os.environ.setdefault(key, val)
-            print ('set environment key: %s' % key)
-
+            print('set environment key: %s' % key)
