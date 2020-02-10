@@ -110,4 +110,3 @@ db.sqlite3
 
 # Secrets, which are stored locally and not pushed to Github
 .env
-
