@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from main.utils import get_env_value
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -136,11 +136,12 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/dev/ref/settings/#fixture-dirs
 FIXTURE_DIRS = ('fixtures')
 
-# OAUTH1 CLIENT
-OAUTH_CLIENT_KEY = ''
-OAUTH_CLIENT_SECRET = ''
-
-OAUTH_TOKEN_URL = 'https://ulsterbank.openbankproject.com/oauth/initiate'
-OAUTH_AUTHORIZATION_URL = 'https://ulsterbank.openbankproject.com/oauth/authorize'
-OAUTH_ACCESS_TOKEN_URL = 'https://ulsterbank.openbankproject.com/oauth/token'
-OAUTH_CALLBACK_URI = 'http://127.0.0.1:8000/authorize'
+# OPEN BANKING PROJECT OAUTH1 CLIENT DEMO, DOES NOT NEED TO BE THE SAME OAUTH-SERVER
+OBP_OAUTH_CLIENT_KEY = get_env_value('OBP_OAUTH_CLIENT_KEY')
+OBP_OAUTH_CLIENT_SECRET = get_env_value('OBP_OAUTH_CLIENT_SECRET')
+# Receives the token, after authorization 
+OBP_OAUTH_CALLBACK_URI = get_env_value('OBP_OAUTH_CALLBACK_URI')
+# Request the token, with KEY & SECRET
+OBP_OAUTH_TOKEN_URL = 'https://demo.openbankproject.com/oauth/initiate'
+OBP_OAUTH_AUTHORIZATION_URL = 'https://demo.openbankproject.com/oauth/authorize'
+OBP_OAUTH_ACCESS_TOKEN_URL = 'https://demo.openbankproject.com/oauth/token'
