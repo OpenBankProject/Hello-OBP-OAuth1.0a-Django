@@ -74,7 +74,7 @@ class BankView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BankView, self).get_context_data(**kwargs)
 
-        openbank_oauth1 = get_oauth(self.request)
+        openbank_oauth1 = get_oauth1(self.request)
 
         # DEMO REQUEST TO GET ALL ACCOUNTS (CREATED AS EXAMPLE VIA THE UI)
         private_bank_json = openbank_oauth1.get(
