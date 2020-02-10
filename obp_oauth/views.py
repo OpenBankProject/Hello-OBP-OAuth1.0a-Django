@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.views.generic import TemplateView
-
 from requests_oauthlib import OAuth1Session
+
 
 def get_oauth1(request):
     openbank_oauth1 = OAuth1Session(
@@ -27,11 +27,14 @@ class IndexView(TemplateView):
         )
 
         # OBP_OAUTH1 Provider does not need to be with the Bank
-        fetch_response = openbank.fetch_request_token(settings.OBP_OAUTH_TOKEN_URL)
-        authorization_url = openbank.authorization_url(settings.OBP_OAUTH_AUTHORIZATION_URL)
+        fetch_response = openbank.fetch_request_token(
+            settings.OBP_OAUTH_TOKEN_URL)
+        authorization_url = openbank.authorization_url(
+            settings.OBP_OAUTH_AUTHORIZATION_URL)
 
         self.request.session['oauth_token'] = fetch_response.get('oauth_token')
-        self.request.session['oauth_secret'] = fetch_response.get('oauth_token_secret')
+        self.request.session['oauth_secret'] = fetch_response.get(
+            'oauth_token_secret')
         self.request.session.modified = True
 
         context['authorization_url'] = authorization_url
@@ -51,16 +54,19 @@ class AuthorizationView(TemplateView):
             resource_owner_secret=self.request.session['oauth_secret']
         )
 
-        openbank.parse_authorization_response(self.request.build_absolute_uri())
+        openbank.parse_authorization_response(
+            self.request.build_absolute_uri())
 
-        fetch_response = openbank.fetch_access_token(settings.OBP_OAUTH_ACCESS_TOKEN_URL)
-
+        fetch_response = openbank.fetch_access_token(
+            settings.OBP_OAUTH_ACCESS_TOKEN_URL)
 
         self.request.session['oauth_token'] = fetch_response.get('oauth_token')
-        self.request.session['oauth_secret'] = fetch_response.get('oauth_token_secret')
+        self.request.session['oauth_secret'] = fetch_response.get(
+            'oauth_token_secret')
 
         context['private_bank_json'] = fetch_response
         return context
+
 
 class BankView(TemplateView):
     template_name = "obp_oauth/authorization.html"
@@ -71,7 +77,8 @@ class BankView(TemplateView):
         openbank_oauth1 = get_oauth(self.request)
 
         # DEMO REQUEST TO GET ALL ACCOUNTS (CREATED AS EXAMPLE VIA THE UI)
-        private_bank_json = openbank_oauth1.get('https://demo.openbankproject.com/obp/v4.0.0/banks/dmo.02.de.de/accounts-held')
+        private_bank_json = openbank_oauth1.get(
+            'https://demo.openbankproject.com/obp/v4.0.0/banks/dmo.02.de.de/accounts-held')
         context['private_bank_json'] = private_bank_json.json()
 
         return context
