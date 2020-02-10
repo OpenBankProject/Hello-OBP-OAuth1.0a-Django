@@ -1,4 +1,8 @@
 name: Python OBP application
+env:
+  OBP_OAUTH_CLIENT_KEY: DEFAULT
+  OBP_OAUTH_CLIENT_SECRET: DEFAULT
+  OBP_OAUTH_CALLBACK_URI: https://example.com/authorize
 
 on: [push]
 
