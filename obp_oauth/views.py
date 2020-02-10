@@ -4,14 +4,14 @@ from django.views.generic import TemplateView
 
 from requests_oauthlib import OAuth1Session
 
-def get_oauth(request):
-    openbank = OAuth1Session(
+def get_oauth1(request):
+    openbank_oauth1 = OAuth1Session(
         settings.OBP_OAUTH_CLIENT_KEY,
         client_secret=settings.OBP_OAUTH_CLIENT_SECRET,
         resource_owner_key=request.session['oauth_token'],
         resource_owner_secret=request.session['oauth_secret']
     )
-    return openbank
+    return openbank_oauth1
 
 
 class IndexView(TemplateView):
@@ -68,10 +68,10 @@ class BankView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BankView, self).get_context_data(**kwargs)
 
-        openbank = get_oauth(self.request)
+        openbank_oauth1 = get_oauth(self.request)
 
         # DEMO REQUEST TO GET ALL ACCOUNTS (CREATED AS EXAMPLE VIA THE UI)
-        private_bank_json = openbank.get('https://demo.openbankproject.com/obp/v4.0.0/banks/dmo.02.de.de/accounts-held')
+        private_bank_json = openbank_oauth1.get('https://demo.openbankproject.com/obp/v4.0.0/banks/dmo.02.de.de/accounts-held')
         context['private_bank_json'] = private_bank_json.json()
 
         return context
