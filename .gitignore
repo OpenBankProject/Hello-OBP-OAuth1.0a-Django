@@ -59,6 +59,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
+venv/
 build/
 develop-eggs/
 dist/
@@ -104,6 +105,8 @@ docs/_build/
 # PyBuilder
 target/
 
-
 .venv
 db.sqlite3
+
+# Secrets, which are stored locally and not pushed to Github
+.env
