@@ -62,7 +62,7 @@ class AuthorizationView(TemplateView):
         return context
 
 class BankView(TemplateView):
-    template_name = "obp_oauth/authorization.html"
+    template_name = "obp_oauth/bank.html"
 
     def get_context_data(self, **kwargs):
         context = super(BankView, self).get_context_data(**kwargs)
